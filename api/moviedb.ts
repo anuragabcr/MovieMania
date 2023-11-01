@@ -64,3 +64,13 @@ export const fetchSimilar = (id) => {
   const similar = `${BASE_URL}/movie/${id}/similar?language=en-US&api_key=${process.env.EXPO_PUBLIC_TMDB_API_KEY}`;
   return apiCall(similar);
 };
+
+export const fetchPerson = (id) => {
+  const person = `${BASE_URL}/person/${id}?language=en-US&api_key=${process.env.EXPO_PUBLIC_TMDB_API_KEY}`;
+  return apiCall(person);
+};
+
+export const fetchMovies = (id) => {
+  const movies = `${BASE_URL}/person/${id}/movie_credits?language=en-US&api_key=${process.env.EXPO_PUBLIC_TMDB_API_KEY}`;
+  return apiCall(movies);
+};

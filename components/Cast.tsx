@@ -4,8 +4,6 @@ import { useNavigation } from "@react-navigation/native";
 import { image500 } from "../api/moviedb";
 
 const Cast = ({ data }: { data: any }) => {
-  const characterName = "John wick";
-  const personName = "John wick";
   const navigation = useNavigation();
 
   return (
