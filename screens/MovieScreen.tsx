@@ -16,6 +16,7 @@ import { HeartIcon } from "react-native-heroicons/solid";
 import { LinearGradient } from "expo-linear-gradient";
 import Cast from "../components/Cast";
 import MovieList from "../components/MovieList";
+import Loading from "../components/Loading";
 
 const { width, height } = Dimensions.get("window");
 const ios = Platform.OS == "ios";
@@ -24,6 +25,7 @@ const topmargin = ios ? "" : "mt-3";
 const MovieScreen = () => {
   const { params: item } = useRoute();
   const navigation = useNavigation();
+  const [loading, setLoading] = useState(false);
   const [isFavourite, setIsFavourite] = useState(false);
   const [similarMovies, setSimilarMovies] = useState([1, 2, 3]);
   const [cast, setCast] = useState([1, 2, 3]);
@@ -57,19 +59,23 @@ const MovieScreen = () => {
             />
           </TouchableOpacity>
         </SafeAreaView>
-        <View>
-          <Image
-            source={require("../assets/images/movie1.png")}
-            style={{ width, height: height * 0.55 }}
-          />
-          <LinearGradient
-            colors={["transparent", "rgba(23,23,23,0.8)", "rgba(23,23,23,1)"]}
-            style={{ width, height: height * 0.4 }}
-            start={{ x: 0.5, y: 0 }}
-            end={{ x: 0.5, y: 1 }}
-            className="absolute bottom-0"
-          />
-        </View>
+        {loading ? (
+          <Loading />
+        ) : (
+          <View>
+            <Image
+              source={require("../assets/images/movie1.png")}
+              style={{ width, height: height * 0.55 }}
+            />
+            <LinearGradient
+              colors={["transparent", "rgba(23,23,23,0.8)", "rgba(23,23,23,1)"]}
+              style={{ width, height: height * 0.4 }}
+              start={{ x: 0.5, y: 0 }}
+              end={{ x: 0.5, y: 1 }}
+              className="absolute bottom-0"
+            />
+          </View>
+        )}
       </View>
       <View style={{ marginTop: -(height * 0.09) }} className="space-y-3">
         <Text className="text-white text-center text-3xl font-bold tracking-wider">
