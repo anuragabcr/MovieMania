@@ -17,6 +17,12 @@ import { LinearGradient } from "expo-linear-gradient";
 import Cast from "../components/Cast";
 import MovieList from "../components/MovieList";
 import Loading from "../components/Loading";
+import {
+  fetchCredits,
+  fetchDetails,
+  fetchSimilar,
+  image500,
+} from "../api/moviedb";
 
 const { width, height } = Dimensions.get("window");
 const ios = Platform.OS == "ios";
@@ -25,12 +31,31 @@ const topmargin = ios ? "" : "mt-3";
 const MovieScreen = () => {
   const { params: item } = useRoute();
   const navigation = useNavigation();
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [isFavourite, setIsFavourite] = useState(false);
-  const [similarMovies, setSimilarMovies] = useState([1, 2, 3]);
-  const [cast, setCast] = useState([1, 2, 3]);
+  const [details, setDetails] = useState({});
+  const [credits, setCredits] = useState([]);
+  const [similar, setSimilar] = useState([]);
 
-  useEffect(() => {}, [item]);
+  useEffect(() => {
+    const getInitialData = async () => {
+      const details = await fetchDetails(item?.id);
+      setDetails(details);
+
+      const credits = await fetchCredits(item?.id);
+      setCredits(credits?.cast);
+
+      const similar = await fetchSimilar(item?.id);
+      setSimilar(similar.results);
+
+      setLoading(false);
+    };
+    getInitialData();
+  }, [item]);
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <ScrollView
@@ -59,50 +84,50 @@ const MovieScreen = () => {
             />
           </TouchableOpacity>
         </SafeAreaView>
-        {loading ? (
-          <Loading />
-        ) : (
-          <View>
-            <Image
-              source={require("../assets/images/movie1.png")}
-              style={{ width, height: height * 0.55 }}
-            />
-            <LinearGradient
-              colors={["transparent", "rgba(23,23,23,0.8)", "rgba(23,23,23,1)"]}
-              style={{ width, height: height * 0.4 }}
-              start={{ x: 0.5, y: 0 }}
-              end={{ x: 0.5, y: 1 }}
-              className="absolute bottom-0"
-            />
-          </View>
-        )}
+
+        <View>
+          <Image
+            // source={require("../assets/images/movie1.png")}
+            source={{ uri: image500(details?.poster_path) }}
+            style={{ width, height: height * 0.55 }}
+          />
+          <LinearGradient
+            colors={["transparent", "rgba(23,23,23,0.8)", "rgba(23,23,23,1)"]}
+            style={{ width, height: height * 0.4 }}
+            start={{ x: 0.5, y: 0 }}
+            end={{ x: 0.5, y: 1 }}
+            className="absolute bottom-0"
+          />
+        </View>
       </View>
+
       <View style={{ marginTop: -(height * 0.09) }} className="space-y-3">
         <Text className="text-white text-center text-3xl font-bold tracking-wider">
-          Batman
+          {details?.title}
         </Text>
-        <Text className="text-neutral-400 font-semibold text-base text-center">
-          Released . 2023 . 120 min
+        <Text className="text-white text-center text-sm tracking-wider">
+          {details?.tagline}
+        </Text>
+        <Text className="text-neutral-300 font-semibold text-base text-center pt-3">
+          Released . {details?.release_date} . {details?.runtime} min
         </Text>
         <View className="flex-row justify-center mx-4 space-x-2">
-          <Text className="text-neutral-400 font-semibold text-base text-center">
-            Action .{" "}
-          </Text>
-          <Text className="text-neutral-400 font-semibold text-base text-center">
-            Comedy .{" "}
-          </Text>
-          <Text className="text-neutral-400 font-semibold text-base text-center">
-            Drama
-          </Text>
+          {details?.genres?.map((genre, index) => (
+            <Text
+              key={index}
+              className="text-neutral-300 font-semibold text-base text-center"
+            >
+              {genre?.name} {index + 1 != details?.genres.length ? " - " : " "}
+            </Text>
+          ))}
         </View>
-        <Text className="text-neutral-400 mx-4 tracking-wide">Description</Text>
+        <Text className="text-neutral-400 mx-4 tracking-wide">
+          {details?.overview}
+        </Text>
       </View>
-      <Cast data={cast} />
-      <MovieList
-        title="Similar movies"
-        data={similarMovies}
-        hideSeeAll={true}
-      />
+
+      <Cast data={credits} />
+      <MovieList title="Similar movies" data={similar} hideSeeAll={true} />
     </ScrollView>
   );
 };

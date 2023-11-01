@@ -49,3 +49,18 @@ export const fetchTopRated = () => {
   const top_rated = `${BASE_URL}/movie/top_rated?language=en-US&page=1&api_key=${process.env.EXPO_PUBLIC_TMDB_API_KEY}`;
   return apiCall(top_rated);
 };
+
+export const fetchDetails = (id) => {
+  const details = `${BASE_URL}/movie/${id}?language=en-US&api_key=${process.env.EXPO_PUBLIC_TMDB_API_KEY}`;
+  return apiCall(details);
+};
+
+export const fetchCredits = (id) => {
+  const credits = `${BASE_URL}/movie/${id}/credits?language=en-US&api_key=${process.env.EXPO_PUBLIC_TMDB_API_KEY}`;
+  return apiCall(credits);
+};
+
+export const fetchSimilar = (id) => {
+  const similar = `${BASE_URL}/movie/${id}/similar?language=en-US&api_key=${process.env.EXPO_PUBLIC_TMDB_API_KEY}`;
+  return apiCall(similar);
+};

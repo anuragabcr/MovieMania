@@ -49,14 +49,14 @@ const MovieList = ({
             <View className="space-y-1 mr-4">
               <Image
                 // source={require("../assets/images/movie1.png")}
-                source={{ uri: image500(item.poster_path) }}
+                source={{ uri: image500(item?.poster_path) }}
                 style={{ width: width * 0.33, height: height * 0.22 }}
                 className="rounded-3xl"
               />
               <Text className="text-neutral-300 ml-1">
-                {item.original_title.length > 14
-                  ? item.original_title.slice(0, 14) + "..."
-                  : item.original_title}
+                {item?.original_title?.length > 14
+                  ? item?.original_title.slice(0, 14) + "..."
+                  : item?.original_title}
               </Text>
             </View>
           </TouchableWithoutFeedback>
