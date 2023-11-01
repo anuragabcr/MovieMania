@@ -5,6 +5,7 @@ const Stack = createNativeStackNavigator();
 
 import React from "react";
 import HomeScreen from "./screens/HomeScreen";
+import MovieScreen from "./screens/MovieScreen";
 
 const Navigation = () => {
   return (
@@ -15,6 +16,7 @@ const Navigation = () => {
         }}
       >
         <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="Movie" component={MovieScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

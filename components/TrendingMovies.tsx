@@ -8,8 +8,8 @@ var { width, height } = Dimensions.get("window");
 
 const TrendingMovies = ({ data }: { data: any }) => {
   const navigation = useNavigation();
-  const handleClick = () => {
-    navigation.navigate("Movie");
+  const handleClick = (item) => {
+    navigation.navigate("Movie", item);
   };
 
   return (

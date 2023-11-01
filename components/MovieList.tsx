@@ -13,17 +13,27 @@ import { useNavigation } from "@react-navigation/native";
 
 var { width, height } = Dimensions.get("window");
 
-const MovieList = ({ title, data }: { title: string; data: any }) => {
+const MovieList = ({
+  title,
+  data,
+  hideSeeAll,
+}: {
+  title: string;
+  data: any;
+  hideSeeAll?: boolean;
+}) => {
   const navigation = useNavigation();
   return (
     <View className="mb-8 space-y-4">
       <View className="mx-4 flex-row justify-between items-center">
         <Text className="text-white text-xl">{title}</Text>
-        <TouchableOpacity>
-          <Text className="text-xl" style={styles.text}>
-            See All
-          </Text>
-        </TouchableOpacity>
+        {!hideSeeAll && (
+          <TouchableOpacity>
+            <Text className="text-xl" style={styles.text}>
+              See All
+            </Text>
+          </TouchableOpacity>
+        )}
       </View>
       <ScrollView
         horizontal
@@ -33,7 +43,7 @@ const MovieList = ({ title, data }: { title: string; data: any }) => {
         {data.map((item, index) => (
           <TouchableWithoutFeedback
             key={index}
-            onPress={() => navigation.navigate("Movie", item)}
+            onPress={() => navigation.push("Movie", item)}
           >
             <View className="space-y-1 mr-4">
               <Image
