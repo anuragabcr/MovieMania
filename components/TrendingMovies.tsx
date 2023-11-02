@@ -18,7 +18,7 @@ const TrendingMovies = ({ data }: { data: any }) => {
       <Carousel
         data={data}
         renderItem={({ item }) => (
-          <MovieCard item={item} handleClick={handleClick} />
+          <MovieCard key={item} item={item} handleClick={handleClick} />
         )}
         firstItem={0}
         inactiveSlideOpacity={0.6}

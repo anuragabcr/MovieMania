@@ -74,3 +74,8 @@ export const fetchMovies = (id) => {
   const movies = `${BASE_URL}/person/${id}/movie_credits?language=en-US&api_key=${process.env.EXPO_PUBLIC_TMDB_API_KEY}`;
   return apiCall(movies);
 };
+
+export const searchMovies = (params) => {
+  const movies = `${BASE_URL}/search/movie?language=en-US&api_key=${process.env.EXPO_PUBLIC_TMDB_API_KEY}`;
+  return apiCall(movies, params);
+};
