@@ -11,6 +11,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import {
   Bars3CenterLeftIcon,
   MagnifyingGlassIcon,
+  UserCircleIcon,
 } from "react-native-heroicons/outline";
 import { styles } from "../theme";
 import TrendingMovies from "../components/TrendingMovies";
@@ -66,7 +67,8 @@ const HomeScreen = () => {
       <SafeAreaView className={Platform.OS == "ios" ? "-mb-2" : "-mb-3"}>
         <StatusBar style="light" />
         <View className="flex-row justify-between items-center mx-4">
-          <Bars3CenterLeftIcon size={30} strokeWidth={2} color="white" />
+          {/* <UserCircleIcon size={30} strokeWidth={2} color="white" /> */}
+          <Text></Text>
           <Text className="text-white text-3xl font-bold">
             <Text style={styles.text}>Movie</Text>Mania
           </Text>
